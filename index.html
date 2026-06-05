@@ -43,61 +43,49 @@ button{
 
 <br><br>
 
-<button onclick="downloadPS1()">
+<button onclick="downloadTool()">
 Tải công cụ kiểm tra
 </button>
 
 <script>
 
-async function downloadPS1(){
+function downloadTool() {
 
-    let fullName =
-        document.getElementById("fullName").value;
+    // ===== Tải inventory.ps1 =====
 
-    let department =
-        document.getElementById("department").value;
+    let content = `
+$fullName = "${fullName}"
+$department = "${department}"
 
-    if(!fullName || !department){
-        alert("Vui lòng nhập đầy đủ thông tin");
-        return;
-    }
+...toàn bộ code PowerShell...
+`;
 
-    let response =
-        await fetch("inventory.ps1");
+    let blob = new Blob(
+        [content],
+        {type:"text/plain"}
+    );
 
-    let content =
-        await response.text();
+    let ps1 = document.createElement("a");
 
-    content =
-        content.replace(
-            "__FULLNAME__",
-            fullName
-        );
+    ps1.href = URL.createObjectURL(blob);
 
-    content =
-        content.replace(
-            "__DEPARTMENT__",
-            department
-        );
+    ps1.download = "inventory.ps1";
 
-    let blob =
-        new Blob(
-            [content],
-            {type:"text/plain"}
-        );
+    ps1.click();
 
-    let a =
-        document.createElement("a");
+    // ===== Tải run.bat =====
 
-    a.href =
-        URL.createObjectURL(blob);
+    setTimeout(() => {
 
-    a.download =
-        "inventory.ps1";
+        let bat = document.createElement("a");
 
-    a.click();
-    b.download = "run.bat"
-    b.click();
+        bat.href = "run.bat";
+
+        bat.download = "run.bat";
+
+        bat.click();
+
+    }, 300);
 }
     
 </script>
