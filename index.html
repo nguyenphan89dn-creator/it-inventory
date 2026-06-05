@@ -49,7 +49,7 @@ Tải công cụ kiểm tra
 
 <script>
 
-function downloadPS1(){
+async function downloadPS1(){
 
     let fullName =
         document.getElementById("fullName").value;
@@ -62,15 +62,23 @@ function downloadPS1(){
         return;
     }
 
-    let content = `
-$fullName = "${fullName}"
-$department = "${department}"
+    let response =
+        await fetch("inventory.ps1");
 
-Write-Host "Ho ten: $fullName"
-Write-Host "Phong ban: $department"
+    let content =
+        await response.text();
 
-Pause
-`;
+    content =
+        content.replace(
+            "__FULLNAME__",
+            fullName
+        );
+
+    content =
+        content.replace(
+            "__DEPARTMENT__",
+            department
+        );
 
     let blob =
         new Blob(
