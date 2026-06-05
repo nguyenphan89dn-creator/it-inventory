@@ -1,8 +1,8 @@
 # ===== THONG TIN NGUOI DUNG =====
 
-$fullName = Read-Host "Nhap ho ten"
+$fullName = "__FULLNAME__"
 
-$department = Read-Host "Nhap phong ban"
+$department = "__DEPARTMENT__"
 
 # ===== WINDOWS =====
 
