@@ -205,15 +205,16 @@ $json
 
 # ===== GUI VE SERVER =====
 
-Invoke-RestMethod `
-    -Uri "https://script.google.com/macros/s/AKfycbw_eiRsYKCvGJ103gFnvGLu_NEPd-zgDZPh1TjW1O1HkR56W6nLmc3E2rDms5KAWJ0O/exec" `
-    -Method Post `
-    -Body $json `
-    -ContentType "application/json"
+$result = Invoke-RestMethod `
+-Uri "https://script.google.com/macros/s/AKfycbw_eiRsYKCvGJ103gFnvGLu_NEPd-zgDZPh1TjW1O1HkR56W6nLmc3E2rDms5KAWJ0O/exec" `
+-Method Post `
+-Body $json `
+-ContentType "application/json"
 
 Write-Host ""
 Write-Host "=================================="
-Write-Host "DA GUI THANH CONG"
+Write-Host "KET QUA:"
+Write-Host $result
 Write-Host "=================================="
 
-Pause
+Read-Host "Nhan Enter de thoat"
