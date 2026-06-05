@@ -1,38 +1,96 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <title>Kiểm kê máy tính nội bộ</title>
+<meta charset="UTF-8">
+<title>Kiểm kê thiết bị CNTT</title>
 
-    <style>
-        body{
-            font-family: Arial;
-            max-width: 800px;
-            margin: 50px auto;
-            text-align:center;
-        }
+<style>
+body{
+    font-family: Arial;
+    text-align:center;
+    margin-top:50px;
+}
 
-        .btn{
-            display:inline-block;
-            padding:12px 24px;
-            background:#0d6efd;
-            color:white;
-            text-decoration:none;
-            border-radius:5px;
-        }
-    </style>
+input{
+    width:300px;
+    padding:10px;
+    margin:10px;
+}
+
+button{
+    padding:12px 30px;
+    font-size:16px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+</style>
+
 </head>
+
 <body>
 
 <h1>KIỂM KÊ THIẾT BỊ CNTT</h1>
 
-<p>
-Vui lòng tải công cụ kiểm tra cấu hình máy tính.
-</p>
+<p>Nhập thông tin trước khi tải công cụ</p>
 
-<a class="btn" href="#">
+<input id="fullName" placeholder="Họ và tên">
+
+<br>
+
+<input id="department" placeholder="Phòng ban">
+
+<br><br>
+
+<button onclick="downloadPS1()">
 Tải công cụ kiểm tra
-</a>
+</button>
+
+<script>
+
+function downloadPS1(){
+
+    let fullName =
+        document.getElementById("fullName").value;
+
+    let department =
+        document.getElementById("department").value;
+
+    if(!fullName || !department){
+        alert("Vui lòng nhập đầy đủ thông tin");
+        return;
+    }
+
+    let content = `
+$fullName = "${fullName}"
+$department = "${department}"
+
+Write-Host "Ho ten: $fullName"
+Write-Host "Phong ban: $department"
+
+Pause
+`;
+
+    let blob =
+        new Blob(
+            [content],
+            {type:"text/plain"}
+        );
+
+    let a =
+        document.createElement("a");
+
+    a.href =
+        URL.createObjectURL(blob);
+
+    a.download =
+        "inventory.ps1";
+
+    a.click();
+}
+
+</script>
 
 </body>
 </html>
