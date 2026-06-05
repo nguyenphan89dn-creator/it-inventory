@@ -1,92 +1,166 @@
 <!DOCTYPE html>
+
 <html lang="vi">
+
 <head>
+
 <meta charset="UTF-8">
-<title>KIỂM TRA TOÀN BỘ CẤU HÌNH MÁY TÍNH SỬ DỤNG</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kiểm kê thiết bị CNTT</title>
 
 <style>
+
 body{
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     text-align:center;
     margin-top:50px;
 }
 
+.container{
+    width:500px;
+    margin:auto;
+}
+
 input{
-    width:300px;
-    padding:10px;
-    margin:10px;
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    font-size:16px;
 }
 
 button{
-    padding:12px 30px;
+    padding:12px 24px;
     font-size:16px;
-    background:#2563eb;
-    color:white;
-    border:none;
     cursor:pointer;
 }
+
+#step2{
+    display:none;
+    margin-top:30px;
+}
+
+.notice{
+    margin-top:20px;
+    color:#555;
+}
+
 </style>
 
 </head>
 
 <body>
 
-<h1>KIỂM TRA TOÀN BỘ CẤU HÌNH MÁY TÍNH SỬ DỤNG</h1>
+<div class="container">
+
+```
+<h1>KIỂM KÊ THIẾT BỊ CNTT</h1>
 
 <p>Nhập thông tin trước khi tải công cụ</p>
 
-<input id="fullName" placeholder="Họ và tên">
+<input
+    type="text"
+    id="fullName"
+    placeholder="Họ và tên">
 
-<br>
-
-<input id="department" placeholder="Phòng ban">
-
-<br><br>
+<input
+    type="text"
+    id="department"
+    placeholder="Phòng ban">
 
 <button onclick="downloadTool()">
-Tải công cụ kiểm tra
+    Tải file cấu hình
 </button>
+
+<div id="step2">
+
+    <h3>Đã tải file cấu hình</h3>
+
+    <p>
+        Tiếp tục tải file chạy bên dưới
+    </p>
+
+    <a href="run.bat" download>
+        <button>
+            Tải run.bat
+        </button>
+    </a>
+
+    <div class="notice">
+
+        <p>
+            Sau khi tải xong:
+        </p>
+
+        <p>
+            1. Đặt inventory.ps1 và run.bat cùng thư mục
+        </p>
+
+        <p>
+            2. Double click run.bat
+        </p>
+
+        <p>
+            3. Chờ thông báo hoàn thành
+        </p>
+
+    </div>
+
+</div>
+```
+
+</div>
 
 <script>
 
-function downloadTool() {
+function downloadTool(){
 
-    // ===== Tải inventory.ps1 =====
+    const fullName =
+        document.getElementById("fullName").value.trim();
+
+    const department =
+        document.getElementById("department").value.trim();
+
+    if(!fullName || !department){
+
+        alert("Vui lòng nhập đầy đủ thông tin");
+
+        return;
+    }
 
     let content = `
+
 $fullName = "${fullName}"
+
 $department = "${department}"
-;
 
-    let blob = new Blob(
-        [content],
-        {type:"text/plain"}
-    );
+`;
 
-    let ps1 = document.createElement("a");
+    const blob =
+        new Blob(
+            [content],
+            {type:"text/plain"}
+        );
 
-    ps1.href = URL.createObjectURL(blob);
+    const a =
+        document.createElement("a");
 
-    ps1.download = "inventory.ps1";
+    a.href =
+        URL.createObjectURL(blob);
 
-    ps1.click();
+    a.download =
+        "inventory.ps1";
 
-    // ===== Tải run.bat =====
+    a.click();
 
-    setTimeout(() => {
-
-        let bat = document.createElement("a");
-
-        bat.href = "run.bat";
-
-        bat.download = "run.bat";
-
-        bat.click();
-
-    }, 300);
+    document
+        .getElementById("step2")
+        .style.display = "block";
 }
-    
+
 </script>
 
 </body>
+
 </html>
