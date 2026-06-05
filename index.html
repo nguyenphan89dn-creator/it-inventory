@@ -96,43 +96,9 @@ async function downloadPS1(){
         "inventory.ps1";
 
     a.click();
+    downloadBat();
 }
-    function downloadBat() {
-
-    const batContent = `@echo off
-
-title Kiem ke thiet bi CNTT
-
-echo.
-echo =====================================
-echo      KIEM KE THIET BI CNTT
-echo =====================================
-echo.
-
-powershell -ExecutionPolicy Bypass -File "%~dp0inventory.ps1"
-
-echo.
-echo =====================================
-echo      DA HOAN THANH
-echo =====================================
-echo.
-
-pause`;
-
-    const blob = new Blob(
-        [batContent],
-        { type: "text/plain" }
-    );
-
-    const a = document.createElement("a");
-
-    a.href = URL.createObjectURL(blob);
-
-    a.download = "run.bat";
-
-    a.click();
-}
-
+    
 </script>
 
 </body>
